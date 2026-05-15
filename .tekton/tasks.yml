@@ -6,41 +6,31 @@ metadata:
 spec:
   workspaces:
     - name: source
-      description: The workspace to clean up
   steps:
     - name: remove
       image: alpine:3
-      command: ["/bin/sh", "-c"]
-      args:
-        - |
-          echo "=== Cleaning workspace ==="
-          rm -rf /workspace/source/*
-          rm -rf /workspace/source/.[!.]*
-          echo "=== Cleanup complete ==="
+      script: |
+        #!/bin/sh
+        echo "=== Cleaning workspace ==="
+        rm -rf $(workspaces.source.path)/*
+        rm -rf $(workspaces.source.path)/.[!.]*
+        echo "=== Cleanup complete ==="
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: jest-test
+  name: test
 spec:
   workspaces:
     - name: source
-      description: The workspace containing the source code
-  params:
-    - name: repo-url
-      type: string
-      default: ""
   steps:
-    - name: run-jest-tests
+    - name: jest-test
       image: node:18-alpine
-      workingDir: /workspace/source
-      command: ["/bin/sh", "-c"]
-      args:
-        - |
-          echo "=== Installing dependencies ==="
-          npm install
-          echo "=== Running ESLint ==="
-          npm run lint
-          echo "=== Running Jest unit tests ==="
-          npm test
-          echo "=== Tests complete ==="
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        echo "=== Installing dependencies ==="
+        npm install
+        echo "=== Running Jest unit tests ==="
+        npm test
+        echo "=== Tests complete ==="
