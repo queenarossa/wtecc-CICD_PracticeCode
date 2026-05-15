@@ -1,21 +1,64 @@
-# Intro to CI/CD Practice Code
+# CI/CD Pipeline Final Project
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Python 3.9](https://img.shields.io/badge/Python-3.9-green.svg)](https://shields.io/)
+## Project Name: CI/CD Pipeline with GitHub Actions, Tekton, and OpenShift
 
-This repository contains the practice code for the labs in **IBM-CD0215EN-SkillsNetwork Introduction to CI/CD**
+## Description
+This project demonstrates a complete CI/CD pipeline implementation using:
+- **GitHub Actions** for automated linting and unit testing
+- **Tekton** for task management and pipeline orchestration
+- **OpenShift** for application deployment
 
-## Contents
+## Tech Stack
+- **Runtime**: Node.js
+- **Testing**: Jest
+- **Linting**: ESLint
+- **CI/CD**: GitHub Actions + Tekton
+- **Platform**: OpenShift (IBM Skills Network)
 
-- Lab 1: [Build an empty Pipeline](labs/01_base_pipeline/README.md)
-- Lab 2: [Adding GitHub Triggers](labs/02_add_git_trigger/README.md)
-- Lab 3: [Use Tekton CD Catalog](labs/03_use_tekton_catalog/README.md)
-- Lab 4: [Integrate Unit Test Automation](labs/04_unit_test_automation/README.md)
-- Lab 5: [Building an Image](labs/05_build_an_image/README.md)
-- Lab 6: [Deploy to Kubernetes](labs/06_deploy_to_kubernetes/README.md)
+## Pipeline Overview
 
-## Instructor
+### GitHub Actions Workflow
+- **Lint Step**: ESLint to enforce code quality
+- **Unit Test Step**: Jest to run automated tests
 
-John Rofrano, Senior Technical Staff Member, DevOps Champion, @ IBM Research
+### Tekton Pipeline
+- **Cleanup Task**: Remove previous deployments/resources
+- **Test Task**: Run Jest unit tests inside the cluster
 
-## <h3 align="center"> © IBM Corporation 2022. All rights reserved. <h3/>
+## Repository Structure
+```
+.
+├── .github/
+│   └── workflows/
+│       └── workflow.yml       # GitHub Actions CI workflow
+├── .tekton/
+│   └── tasks.yml              # Tekton pipeline tasks
+├── src/                       # Application source code
+├── tests/                     # Jest test files
+├── package.json
+└── README.md
+```
+
+## How to Run Locally
+
+### Install dependencies
+```bash
+npm install
+```
+
+### Run linting
+```bash
+npm run lint
+```
+
+### Run unit tests
+```bash
+npm test
+```
+
+## OpenShift Deployment
+The application is deployed on OpenShift using Tekton pipelines.
+Pipeline name: `oc-pipelines-oc-final`
+
+## Author
+CI/CD Final Project — IBM Developer Skills Network / Coursera
